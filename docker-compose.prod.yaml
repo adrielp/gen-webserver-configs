@@ -1,0 +1,16 @@
+version: "3.7"
+
+
+services:
+  nginx:
+    build:
+      context: "./webserver"
+    image: nginx:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.<name>.rule=Host(`<name>`)"
+      - "traefik.http.routers.<name>.entrypoints=websecure"
+      - "traefik.http.routers.<name>.tls.certresolver=myhttpchallenge"
+    volumes:
+      - "./path/to/public:/usr/share/nginx/html:ro"
+
